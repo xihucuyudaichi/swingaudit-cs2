@@ -144,9 +144,19 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   mix-blend-mode: multiply; filter: contrast(1.05); opacity: 0.94;
   mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, .35) 16%, #000 32%, #000 94%, transparent 100%);
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, .35) 16%, #000 32%, #000 94%, transparent 100%);
-  animation: plateIn 1.6s cubic-bezier(.2,.7,.2,1) both;
+  animation: plateIn 0.35s cubic-bezier(.2,.7,.2,1) both;
 }
-@keyframes plateIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.atlas-plate.is-warm img {
+  animation: none !important;
+  transform: none;
+}
+.atlas-plate.is-warm .tactical-lines path.t,
+.atlas-plate.is-warm .tactical-lines path.ct {
+  animation: none !important;
+  opacity: .9;
+  stroke-dashoffset: 0;
+}
+@keyframes plateIn { from { opacity: 0; transform: translateY(10px); } }
 .atlas-plate .tactical-lines { position: absolute; inset: auto; right: 3.5%; top: 0; height: 100%; width: auto; aspect-ratio: 1672 / 941; min-width: 78%; z-index: 1; }
 .tactical-lines path.t, .tactical-lines path.ct { fill: none; stroke-width: 2.2; stroke-dasharray: 2 9; stroke-linecap: round; opacity: .9; animation: route 2.4s .6s ease-out both; }
 .tactical-lines path.t { stroke: var(--signal); }

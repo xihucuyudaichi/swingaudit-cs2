@@ -235,6 +235,44 @@ def _find_static_root() -> Path:
 
 
 STATIC_ROOT = _find_static_root()
+STATIC_FILE_CACHE: dict[str, tuple[tuple[int, int], bytes, bytes | None, str, str, str]] = {}
+STATIC_FILE_LOCK = threading.Lock()
+
+
+def _get_cached_static_file(target: Path, path: str) -> tuple[bytes, bytes | None, str, str, str]:
+    key = str(target)
+    stat = target.stat()
+    signature = (stat.st_mtime_ns, stat.st_size)
+    with STATIC_FILE_LOCK:
+        entry = STATIC_FILE_CACHE.get(key)
+        if entry is not None and entry[0] == signature:
+            return entry[1], entry[2], entry[3], entry[4], entry[5]
+
+    content_type = mimetypes.guess_type(str(target))[0] or 'application/octet-stream'
+    if target.suffix == '.js':
+        content_type = 'application/javascript; charset=utf-8'
+    elif target.suffix == '.css':
+        content_type = 'text/css; charset=utf-8'
+    elif target.suffix == '.html':
+        content_type = 'text/html; charset=utf-8'
+    elif target.suffix == '.webp':
+        content_type = 'image/webp'
+
+    data = target.read_bytes()
+    compressible = target.suffix in ('.js', '.css', '.html', '.json', '.svg') and len(data) > 1024
+    gz = gzip.compress(data, compresslevel=6) if compressible else None
+    # Gzip and identity representations share semantic content, so use a weak ETag.
+    etag = 'W/"' + hashlib.sha256(data).hexdigest()[:24] + '"'
+    if '/assets/' in path or re.fullmatch(r'atlas-arch\.[0-9a-f]{12}\.webp', target.name):
+        cache_ctrl = 'public, max-age=31536000, immutable'
+    else:
+        cache_ctrl = 'no-cache'
+
+    with STATIC_FILE_LOCK:
+        if len(STATIC_FILE_CACHE) >= 256:
+            STATIC_FILE_CACHE.clear()
+        STATIC_FILE_CACHE[key] = (signature, data, gz, content_type, cache_ctrl, etag)
+    return data, gz, content_type, cache_ctrl, etag
 
 
 class CloudHandler(server.Handler):
@@ -256,13 +294,28 @@ class CloudHandler(server.Handler):
         enc = (self.headers.get('Accept-Encoding') or '').lower()
         return 'gzip' in enc
 
-    def _send_bytes(self, status: int, raw: bytes, gz: bytes | None = None, content_type: str = 'application/json; charset=utf-8', cache_control: str = 'no-store'):
+    def _send_bytes(self, status: int, raw: bytes, gz: bytes | None = None, content_type: str = 'application/json; charset=utf-8', cache_control: str = 'no-store', etag: str | None = None):
+        if etag and status == 200:
+            inm = (self.headers.get('If-None-Match') or '').strip()
+            validators = [value.strip().removeprefix('W/') for value in inm.split(',')]
+            if inm and (inm == '*' or etag.removeprefix('W/') in validators):
+                try:
+                    self.send_response(304)
+                    self.send_header('Cache-Control', cache_control)
+                    self.send_header('ETag', etag)
+                    self.send_header('Vary', 'Accept-Encoding')
+                    self.end_headers()
+                except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError):
+                    pass
+                return
         use_gz = gz is not None and self._accepts_gzip()
         body = gz if use_gz else raw
         try:
             self.send_response(status)
             self.send_header('Content-Type', content_type)
             self.send_header('Cache-Control', cache_control)
+            if etag:
+                self.send_header('ETag', etag)
             self.send_header('Vary', 'Accept-Encoding')
             if use_gz:
                 self.send_header('Content-Encoding', 'gzip')
@@ -310,19 +363,8 @@ class CloudHandler(server.Handler):
                 else:
                     return self.send(404, {'error': 'Not found'})
 
-            content_type = mimetypes.guess_type(str(target))[0] or 'application/octet-stream'
-            if target.suffix == '.js':
-                content_type = 'application/javascript; charset=utf-8'
-            elif target.suffix == '.css':
-                content_type = 'text/css; charset=utf-8'
-            elif target.suffix == '.html':
-                content_type = 'text/html; charset=utf-8'
-
-            data = target.read_bytes()
-            compressible = target.suffix in ('.js', '.css', '.html', '.json', '.svg') and len(data) > 1024
-            gz = gzip.compress(data, compresslevel=6) if compressible else None
-            cache_ctrl = 'public, max-age=31536000, immutable' if '/assets/' in path else 'no-cache'
-            return self._send_bytes(200, data, gz, content_type=content_type, cache_control=cache_ctrl)
+            data, gz, content_type, cache_ctrl, etag = _get_cached_static_file(target, path)
+            return self._send_bytes(200, data, gz, content_type=content_type, cache_control=cache_ctrl, etag=etag)
         finally:
             VISITOR_SESSION.reset(token)
 

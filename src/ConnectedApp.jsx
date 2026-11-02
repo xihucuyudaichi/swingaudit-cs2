@@ -913,8 +913,12 @@ function Agent({ verify: verifyProp = false }) {
   );
 }
 
+let homePlateVisited = false;
+
 function Home() {
   const { season, year, metric, setPrompt, setVerifyPrompt, bundle, setUiContext } = useResearch();
+  const [plateWarm] = useState(() => homePlateVisited);
+  useEffect(() => { homePlateVisited = true; }, []);
   const [q, setQ] = useState('');
   const [ledgerTab, setLedgerTab] = useState('summary');
   const openVerify = question => {
@@ -968,8 +972,8 @@ function Home() {
   return (
     <div className="dossier-home">
       <section className="atlas-hero">
-        <div className="atlas-plate" aria-hidden="true">
-          <img src="/atlas-arch.webp" alt="" />
+        <div className={`atlas-plate${plateWarm ? ' is-warm' : ''}`} aria-hidden="true">
+          <img src="/atlas-arch.50f98d6c2e60.webp" alt="" width="1672" height="941" loading="eager" decoding="sync" fetchPriority="high" />
           <TacticalLines />
           <span className="callout c-a"><i />A 小道 · 走廊高台</span>
           <span className="callout c-mid"><i />中门 · 双扇木门</span>

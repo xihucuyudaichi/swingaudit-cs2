@@ -4,8 +4,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'backend'))
 import gzip
 import json
 import os
+import re
+import tempfile
 import threading
 import unittest
+import urllib.error
 import urllib.request
 from http.server import ThreadingHTTPServer
 
@@ -33,6 +36,37 @@ class CloudServerTests(unittest.TestCase):
         with urllib.request.urlopen(req_html, timeout=10) as res:
             self.assertEqual(res.status, 200)
             self.assertIn('text/html', res.headers.get('Content-Type', ''))
+            self.assertEqual(res.headers.get('Cache-Control'), 'no-cache')
+
+        # 1b. Static WebP image caching & ETag 304 support
+        index = (cloud_server.STATIC_ROOT / 'index.html').read_text(encoding='utf-8')
+        image_path = '/' + re.search(r'href="(?:\./|/)(atlas-arch\.[0-9a-f]{12}\.webp)"', index).group(1)
+        req_webp = urllib.request.Request(self.base + image_path)
+        with urllib.request.urlopen(req_webp, timeout=10) as res:
+            self.assertEqual(res.status, 200)
+            self.assertIn('max-age=31536000', res.headers.get('Cache-Control', ''))
+            self.assertIn('immutable', res.headers.get('Cache-Control', ''))
+            self.assertEqual(res.headers.get('Content-Type'), 'image/webp')
+            etag = res.headers.get('ETag')
+            self.assertTrue(etag)
+            webp_bytes = res.read()
+            self.assertLess(len(webp_bytes), 500 * 1024)
+
+        for validator in (etag, etag.removeprefix('W/'), '"old", ' + etag, '*'):
+            req_304 = urllib.request.Request(self.base + image_path, headers={'If-None-Match': validator})
+            with self.assertRaises(urllib.error.HTTPError) as result:
+                urllib.request.urlopen(req_304, timeout=10)
+            err = result.exception
+            self.assertEqual(err.code, 304)
+            self.assertEqual(err.headers.get('Vary'), 'Accept-Encoding')
+            self.assertEqual(err.headers.get('ETag'), etag)
+            self.assertEqual(err.read(), b'')
+            err.close()
+
+        with urllib.request.urlopen(urllib.request.Request(self.base + image_path,
+                headers={'If-None-Match': '"old"'}), timeout=10) as res:
+            self.assertEqual(res.status, 200)
+            self.assertEqual(res.read(), webp_bytes)
 
         # 2. Gzipped /api/bootstrap
         req_boot = urllib.request.Request(self.base + '/api/bootstrap', headers={'Accept-Encoding': 'gzip'})
@@ -45,6 +79,20 @@ class CloudServerTests(unittest.TestCase):
             data = json.loads(gzip.decompress(compressed).decode('utf-8'))
             self.assertIn('2025', data['data']['seasons'])
             self.assertIn('2026', data['data']['seasons'])
+
+    def test_static_cache_refreshes_changed_files(self):
+        with tempfile.TemporaryDirectory() as directory:
+            file = Path(directory) / 'index.html'
+            file.write_bytes(b'a' * 2048)
+            original = cloud_server._get_cached_static_file(file, '/')
+            self.assertEqual(gzip.decompress(original[1]), original[0])
+            self.assertEqual(original[3], 'no-cache')
+            file.write_bytes(b'b' * 3072)
+            updated = cloud_server._get_cached_static_file(file, '/')
+            self.assertEqual(updated[0], b'b' * 3072)
+            self.assertNotEqual(updated[4], original[4])
+            self.assertEqual(gzip.decompress(updated[1]), updated[0])
+            cloud_server.STATIC_FILE_CACHE.pop(str(file), None)
 
     def test_cross_origin_post_and_visitor_isolation(self):
         # Simulate ModelScope Studio *.ms.show Origin header on POST /api/compare and /api/records
