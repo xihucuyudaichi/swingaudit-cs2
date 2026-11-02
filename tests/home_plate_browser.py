@@ -36,7 +36,8 @@ def main():
             initial = app.locator('.atlas-plate img').evaluate("i => ({url:i.currentSrc,width:i.naturalWidth,height:i.naturalHeight,animation:getComputedStyle(i).animationDuration})")
             assert initial['width'] == 1672 and initial['height'] == 941, initial
             assert initial['animation'] == '0.35s', initial
-            case = {'width': width, 'initial': initial, 'returns': []}
+            app_width = app.evaluate('innerWidth')
+            case = {'width': width, 'app_width': app_width, 'initial': initial, 'returns': []}
             initial_requests = len(image_requests)
             for route in ['/compare', '/verify', '/players']:
                 app.evaluate('(route) => {location.hash = route}', route)
@@ -61,7 +62,8 @@ def main():
                 })""")
                 assert result['warm'] and result['complete'] and result['naturalWidth'] == 1672, result
                 assert result['animation'] == 'none' and result['routeAnimation'] == 'none', result
-                expected_opacity = 1 if width <= 860 else .55 if width <= 1180 else .94
+                # ModelScope can keep a desktop-sized iframe even in a narrow host window.
+                expected_opacity = 1 if app_width <= 860 else .55 if app_width <= 1180 else .94
                 assert abs(result['opacity']-expected_opacity) < .01, result
                 assert len(image_requests) == initial_requests, image_requests
                 case['returns'].append({'from': route, **result})
