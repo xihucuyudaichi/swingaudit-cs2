@@ -199,6 +199,16 @@ def main():
     repo = args.repo.strip()
     print(f'Authenticated as ModelScope user: {owner} | Target Studio: {owner}/{repo}')
 
+    # Query available free hardware dynamically
+    free_hw = 'platform/2v-cpu-8g-mem'
+    st_hw, hw_res = api_call('GET', '/studios/hardware?sdk_type=docker', token)
+    if st_hw == 200 and isinstance(hw_res.get('data'), dict):
+        for item in hw_res['data'].get('hardware') or []:
+            if isinstance(item, dict) and item.get('resource_type') == 'free' and item.get('name'):
+                free_hw = item['name']
+                break
+    print(f'Selected free hardware spec: {free_hw}')
+
     # Check if Studio exists
     st, info = api_call('GET', f'/studios/{owner}/{repo}', token)
     if st != 200 or info.get('success') is False:
@@ -208,7 +218,7 @@ def main():
             'repo_name': repo,
             'sdk_type': 'docker',
             'visibility': 'public',
-            'hardware': 'platform/2v-cpu-16g-mem',
+            'hardware': free_hw,
             'display_name': 'SwingAudit · CS2 选手观察室',
             'chinese_name': 'SwingAudit · CS2 选手观察室',
             'description': '浙江大学《设计大数据基础》课程项目：面向 CS/CS2 职业选手的多源证据检索、同位置比较、年度排名分析与未来赛事条件推演。',
@@ -225,7 +235,7 @@ def main():
             'PATCH',
             f'/studios/{owner}/{repo}/settings',
             token,
-            {'sdk_type': 'docker', 'hardware': 'platform/2v-cpu-16g-mem', 'visibility': 'public'},
+            {'sdk_type': 'docker', 'hardware': free_hw, 'visibility': 'public'},
         )
 
     # Sync code via Git
