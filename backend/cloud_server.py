@@ -85,7 +85,8 @@ def _resolve_visitor_dir() -> Path:
 
 
 VISITOR_DIR = _resolve_visitor_dir()
-research.db_path = lambda: VISITOR_DIR / f'{VISITOR_SESSION.get()}.sqlite3'
+_orig_db_path = research.db_path
+research.db_path = lambda: _orig_db_path() if os.environ.get('ROUND_RESEARCH_DB') else (VISITOR_DIR / f'{VISITOR_SESSION.get()}.sqlite3')
 
 AGENT_SEMAPHORE = threading.BoundedSemaphore(int(os.environ.get('ROUND_AGENT_CONCURRENCY', '3')))
 
@@ -117,7 +118,8 @@ def warmup_caches():
     }
     for path, payload in static_endpoints.items():
         GZIP_CACHE[path] = _encode_pair(payload)
-    # Pre-warm default bootstrap with empty visitor records
+    # Pre-warm default fast & full bootstrap with empty visitor records
+    _get_fast_bootstrap_pair('2026', [])
     _get_bootstrap_pair([])
 
 
@@ -146,6 +148,79 @@ def _get_bootstrap_pair(records: list) -> tuple[bytes, bytes]:
         if len(BOOTSTRAP_CACHE) >= 16:
             BOOTSTRAP_CACHE.clear()
         BOOTSTRAP_CACHE[rec_key] = pair
+    return pair
+
+
+
+FAST_BOOTSTRAP_CACHE: dict[str, tuple[bytes, bytes]] = {}
+
+
+def _build_fast_data(full_years: set[str]) -> dict:
+    seasons = {}
+    for y, sv in server.DATA.get('seasons', {}).items():
+        if y in full_years:
+            seasons[y] = sv
+        else:
+            seasons[y] = {
+                'rows': sv.get('rows', 0),
+                'players': [
+                    {
+                        k: p[k]
+                        for k in (
+                            'id', 'name', 'year', 'maps', 'rating_estimate',
+                            'mvp', 'evp', 'official_rank', 'team', 'country',
+                            'cohort_tier', 'opponents', 'identity_status', 'source_ids'
+                        )
+                        if k in p
+                    }
+                    | {'events': []}
+                    for p in sv.get('players', [])
+                ],
+                'events': [
+                    {'name': e['name'], 'year': e.get('year'), 'tier': e.get('tier'), 'players': []}
+                    for e in sv.get('events', [])
+                ],
+            }
+    return {'meta': server.DATA.get('meta'), 'seasons': seasons}
+
+
+def _build_fast_roles(full_years: set[str]) -> dict:
+    seasons = {}
+    for y, rv in (server.ROLE_REPORT.get('seasons') or {}).items():
+        if y in full_years:
+            seasons[y] = rv
+        else:
+            seasons[y] = {k: v for k, v in rv.items() if k != 'players'} | {'players': []}
+    return {k: v for k, v in server.ROLE_REPORT.items() if k != 'seasons'} | {'seasons': seasons}
+
+
+def _get_fast_bootstrap_pair(target_year: str, records: list) -> tuple[bytes, bytes]:
+    full_years = {'2025', '2026', str(target_year or '2026')}
+    cache_key = hashlib.sha256(
+        json.dumps({'years': sorted(full_years), 'records': records}, ensure_ascii=False, sort_keys=True).encode('utf-8')
+    ).hexdigest()
+    with BOOTSTRAP_LOCK:
+        cached = FAST_BOOTSTRAP_CACHE.get(cache_key)
+        if cached is not None:
+            return cached
+    model_obj = json.loads((ROOT / 'data/model-report.json').read_text(encoding='utf-8'))
+    payload = {
+        '_partial': True,
+        'data': _build_fast_data(full_years),
+        'report': model_obj,
+        'roles': _build_fast_roles(full_years),
+        'rules': server.RULES_CORPUS,
+        'ontology': server.ONTOLOGY,
+        'event_weights': server.EVENT_WEIGHTS,
+        'coverage': server.AUDIT,
+        'sources': server.SOURCES,
+        'records': records,
+    }
+    pair = _encode_pair(payload)
+    with BOOTSTRAP_LOCK:
+        if len(FAST_BOOTSTRAP_CACHE) >= 16:
+            FAST_BOOTSTRAP_CACHE.clear()
+        FAST_BOOTSTRAP_CACHE[cache_key] = pair
     return pair
 
 
@@ -211,7 +286,12 @@ class CloudHandler(server.Handler):
                 raw, gz = GZIP_CACHE[path]
                 return self._send_bytes(200, raw, gz)
             if path == '/api/bootstrap':
-                raw, gz = _get_bootstrap_pair(research.get_records())
+                records = research.get_records()
+                if (self.headers.get('X-Bootstrap-Mode') or '').lower() == 'fast':
+                    req_year = (self.headers.get('X-Bootstrap-Year') or '2026').strip()
+                    raw, gz = _get_fast_bootstrap_pair(req_year, records)
+                else:
+                    raw, gz = _get_bootstrap_pair(records)
                 return self._send_bytes(200, raw, gz)
             if path.startswith('/api/'):
                 return super().do_GET()

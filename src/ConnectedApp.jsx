@@ -119,10 +119,11 @@ const route = id => encodeURIComponent(id);
 
 function Link({ to, children, ...props }) { return <a href={'#' + to} {...props}>{children}</a>; }
 
-async function api(path, body, signal) {
+async function api(path, body, signal, extraHeaders) {
+  const headers = { ...(body ? { 'Content-Type': 'application/json' } : {}), ...(extraHeaders || {}) };
   const res = await fetch('/api/' + path, {
     method: body ? 'POST' : 'GET',
-    headers: body ? { 'Content-Type': 'application/json' } : undefined,
+    headers: Object.keys(headers).length ? headers : undefined,
     body: body ? JSON.stringify(body) : undefined,
     signal
   });
@@ -2610,7 +2611,17 @@ export default function ConnectedApp() {
 
   async function init() {
     setError('');
-    try { setBundle(await api('bootstrap')); } catch (e) { setError(e.message); }
+    try {
+      const fast = await api('bootstrap', null, undefined, { 'X-Bootstrap-Mode': 'fast', 'X-Bootstrap-Year': year });
+      setBundle(fast);
+      if (fast?._partial) {
+        api('bootstrap').then(full => {
+          setBundle(prev => ({ ...full, records: prev?.records?.length ? prev.records : full.records }));
+        }).catch(() => {});
+      }
+    } catch (e) {
+      setError(e.message);
+    }
   }
   useEffect(() => { init(); return () => { clearTimeout(noticeTimer.current); clearTimeout(surgeTimer.current); }; }, []);
   useEffect(() => {
@@ -2640,8 +2651,8 @@ export default function ConnectedApp() {
   }
   async function save(title, payload) {
     try {
-      const r = await api('records', { title, payload: { ...payload, data_snapshot: bundle.data.meta, storage_version: 2 } });
-      setBundle(b => ({ ...b, records: [r, ...b.records] }));
+      const r = await api('records', { title, payload: { ...payload, data_snapshot: bundle?.data?.meta || {}, storage_version: 2 } });
+      setBundle(b => (b ? { ...b, records: [r, ...(b.records || [])] } : b));
       notify('已保存到「我的研究」');
     } catch (e) {
       notify('保存失败：' + e.message);
@@ -2737,7 +2748,7 @@ export default function ConnectedApp() {
           </div>
         </footer>
       </div>
-      {bundle && !error && <Agent />}
+      {!error && <Agent />}
       <Evidence />
       {message && <div className="toast visible" role="status">{message}</div>}
     </Context.Provider>
