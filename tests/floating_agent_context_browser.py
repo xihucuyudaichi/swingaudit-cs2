@@ -83,6 +83,15 @@ with sync_playwright() as p:
     agent.locator('.floating-drag-header').dblclick()
     expect(agent).to_have_class('agent-panel reading-agent floating-agent has-answer')
 
+    # 2b. Test off-screen persisted dragPos clamps immediately on page reload without window resize
+    page.evaluate("() => localStorage.setItem('swingaudit.floating.dragpos.v1', JSON.stringify({x: 2103, y: 737}))")
+    page.reload(wait_until='networkidle')
+    expect(agent).to_be_visible()
+    clamped_box = agent.bounding_box()
+    assert clamped_box['x'] >= 0 and clamped_box['y'] >= 0 and (clamped_box['x'] + clamped_box['width']) <= 1440 and (clamped_box['y'] + clamped_box['height']) <= 960, f"Expected off-screen dragPos to clamp inside viewport on reload, got {clamped_box}"
+    report['drag_checks'].append({'offscreen_reload_clamped': clamped_box})
+    agent.locator('.floating-drag-header').dblclick()
+
     # 3. Test minimize to sculpted capsule pill & dragging the pill
     agent.get_by_role('button', name='收起悬浮窗').click()
     pill = page.locator('.floating-agent-pill')

@@ -482,6 +482,23 @@ function DragGripIcon() {
   );
 }
 
+function clampFloatingPosition(pos, el, minimized = false) {
+  if (!pos || !Number.isFinite(pos.x) || !Number.isFinite(pos.y)) return null;
+  const vw = Math.max(320, window.innerWidth || document.documentElement?.clientWidth || 1280);
+  const vh = Math.max(240, window.innerHeight || document.documentElement?.clientHeight || 800);
+  const fallbackW = minimized ? Math.min(360, vw - 24) : Math.min(436, vw - 32);
+  const fallbackH = minimized ? 56 : Math.min(360, vh - 32);
+  const rect = el?.getBoundingClientRect?.();
+  const w = Math.max(120, Math.round(el?.offsetWidth || rect?.width || fallbackW));
+  const h = Math.max(44, Math.round(el?.offsetHeight || rect?.height || fallbackH));
+  const maxX = Math.max(8, vw - w - 8);
+  const maxY = Math.max(8, vh - h - 8);
+  return {
+    x: Math.round(Math.min(Math.max(8, pos.x), maxX)),
+    y: Math.round(Math.min(Math.max(8, pos.y), maxY))
+  };
+}
+
 function Agent({ verify: verifyProp = false }) {
   const { path = '/', year, metric, pair, prompt, setPrompt, season, bundle, eventQuery, uiContext } = useResearch();
   const verify = verifyProp || path === '/verify';
@@ -502,7 +519,9 @@ function Agent({ verify: verifyProp = false }) {
   const [dragPos, setDragPos] = useState(() => {
     try {
       const saved = JSON.parse(localStorage.getItem('swingaudit.floating.dragpos.v1'));
-      if (saved && Number.isFinite(saved.x) && Number.isFinite(saved.y)) return saved;
+      if (saved && Number.isFinite(saved.x) && Number.isFinite(saved.y)) {
+        return clampFloatingPosition(saved, null, false);
+      }
     } catch {}
     return null;
   });
@@ -557,19 +576,26 @@ function Agent({ verify: verifyProp = false }) {
       setDragPos(prev => {
         if (!prev) return null;
         const el = minimized ? pillRef.current : panelRef.current;
-        const w = el?.offsetWidth || 380;
-        const h = el?.offsetHeight || 260;
-        const maxX = Math.max(8, window.innerWidth - w - 8);
-        const maxY = Math.max(8, window.innerHeight - h - 8);
-        return {
-          x: Math.min(Math.max(8, prev.x), maxX),
-          y: Math.min(Math.max(8, prev.y), maxY)
-        };
+        const next = clampFloatingPosition(prev, el, minimized);
+        if (!next) return null;
+        return (next.x === prev.x && next.y === prev.y) ? prev : next;
       });
     }
+    clampToViewport();
+    const raf = window.requestAnimationFrame(clampToViewport);
+    const activeEl = minimized ? pillRef.current : panelRef.current;
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(clampToViewport) : null;
+    if (activeEl) ro?.observe(activeEl);
+    if (document.documentElement) ro?.observe(document.documentElement);
     window.addEventListener('resize', clampToViewport);
-    return () => window.removeEventListener('resize', clampToViewport);
-  }, [minimized, result, editing]);
+    window.visualViewport?.addEventListener('resize', clampToViewport);
+    return () => {
+      window.cancelAnimationFrame(raf);
+      ro?.disconnect();
+      window.removeEventListener('resize', clampToViewport);
+      window.visualViewport?.removeEventListener('resize', clampToViewport);
+    };
+  }, [minimized, result, editing, path]);
 
   function startDrag(e, targetEl) {
     if (e.button !== undefined && e.button !== 0) return;
@@ -587,13 +613,8 @@ function Agent({ verify: verifyProp = false }) {
       if (!dragMovedRef.current && Math.hypot(dx, dy) < 4) return;
       dragMovedRef.current = true;
       setIsDragging(true);
-      const w = el.offsetWidth || rect.width || 380;
-      const h = el.offsetHeight || rect.height || 240;
-      const maxX = Math.max(8, window.innerWidth - w - 8);
-      const maxY = Math.max(8, window.innerHeight - h - 8);
-      const nextX = Math.round(Math.min(Math.max(8, rect.left + dx), maxX));
-      const nextY = Math.round(Math.min(Math.max(8, rect.top + dy), maxY));
-      setDragPos({ x: nextX, y: nextY });
+      const next = clampFloatingPosition({ x: rect.left + dx, y: rect.top + dy }, el, minimized);
+      if (next) setDragPos(next);
     }
     function onUp() {
       setIsDragging(false);
