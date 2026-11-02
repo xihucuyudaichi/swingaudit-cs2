@@ -1,3 +1,25 @@
+---
+title: SwingAudit CS2 选手观察室
+emoji: 🎯
+colorFrom: gray
+colorTo: blue
+sdk: docker
+app_port: 7860
+pinned: false
+domain:
+  - multi-modal
+tags:
+  - cs2
+  - sports-analytics
+  - agent
+deployspec:
+  cpu: 2
+  memory: 16000
+  gpu: 0
+  gpu_memory: 0
+  instance: 1
+---
+
 # SwingAudit · CS2 选手观察室
 
 设计大数据课程项目：面向 CS/CS2 职业选手的证据检索、同位置比较、年度排名分析与未来赛事条件推演。前端采用 React / Vite，后端采用 Python / SQLite。
@@ -69,6 +91,28 @@ npm run build
 ```
 
 浏览器测试是可选步骤：另行安装 Python Playwright 和相应浏览器，先启动前后端，再运行 `npm run test:browser`。`npm run test:agent` 会调用自己配置的在线模型，可能产生服务费用，不属于离线测试。
+
+## 云端独立部署（魔搭社区创空间 ModelScope Studio · Docker 模式）
+
+仓库内置免侵入的云端单端口同源入口（`app.py` / `backend/cloud_server.py`）与多阶段构建 `Dockerfile`，监听标准容器端口 `0.0.0.0:7860`：
+
+- **同源静态与 API 托管**：自动编译并托管 `dist/` 静态前端与 14 个 `/api/*` 接口，兼容 `*.ms.show` / `modelscope.cn` 等云端同源 `POST` 请求。
+- **Gzip 内存预压缩**：启动时对 `/api/bootstrap` 与 `/api/history` 预生成 Gzip 缓存，首屏数据包由 ~87 MB 压缩至 ~8 MB。
+- **访客 SQLite 隔离**：按访客会话隔离研究记录，不读取或暴露任何个人本地数据库。
+- **加密环境变量注入**：支持在创空间【设置 -> Secrets】中配置 `ROUND_LAB_BASE_URL` 与 `ROUND_LAB_API_KEY`（可选 `ROUND_LAB_TIMEOUT_SECONDS`、`ROUND_LAB_MAX_TOKENS`），无需在代码库中存放密钥。
+
+### 一键发布至魔搭创空间
+
+1. 登录 [魔搭社区 Access Token 页面](https://modelscope.cn/my/myaccesstoken) 获取 SDK 访问令牌（使用 Docker 创空间需先完成实名认证与阿里云账号绑定）。
+2. 在项目根目录执行：
+
+```sh
+python scripts/deploy_modelscope.py --token "<YOUR_MODELSCOPE_TOKEN>"
+```
+
+脚本会自动校验账号、创建或更新 `swingaudit-cs2` Docker 创空间（免费 `2 vCPU / 16 GB` 规格）、将本机 `lab.local.json` 模型密钥同步至云端加密 Secrets、推送代码至创空间 `master` 分支并触发构建。构建完成后可直接访问：
+- 创空间页面：`https://modelscope.cn/studios/<你的用户名>/swingaudit-cs2`
+- 全屏直连页面：`https://<你的用户名>-swingaudit-cs2.ms.show`
 
 ## 部署边界
 
