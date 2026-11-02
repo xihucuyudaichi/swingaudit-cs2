@@ -1,0 +1,53 @@
+/* Player archive: an alphabetical index printed on the existing paper surface. */
+.player-directory-tools { display: flex; align-items: stretch; gap: 20px; }
+.player-search { display: flex; flex: 1; align-items: center; gap: 12px; min-width: 0; padding: 0 16px; border: 1px solid var(--line-2); background: var(--bg-input); color: var(--mute); }
+.player-search > svg { flex-shrink: 0; }
+.player-search input { width: 100%; min-width: 0; min-height: 48px; border: 0; padding: 12px 0; outline: 0; background: transparent; color: var(--chalk); font: inherit; font-size: 15px; }
+.player-search input::-webkit-search-cancel-button { display: none; }
+.player-search:focus-within { outline: 2px solid var(--signal); outline-offset: 3px; }
+.player-search-clear { display: grid; place-items: center; flex-shrink: 0; width: 32px; height: 32px; padding: 0; border: 0; background: transparent; color: var(--mute); cursor: pointer; }
+.player-sort { display: flex; flex-shrink: 0; padding: 4px; border: 1px solid var(--line-2); gap: 4px; }
+.player-sort button { display: flex; align-items: center; justify-content: center; gap: 12px; min-height: 40px; padding: 8px 16px; border: 0; color: var(--mute); background: transparent; font: inherit; font-size: 14px; cursor: pointer; transition: background-color 160ms, color 160ms; }
+.player-sort button span { font-family: var(--font-mono); font-size: 13px; }
+.player-sort button[aria-pressed="true"] { background: var(--chalk); color: var(--paper); }
+.player-sort button:not([aria-pressed="true"]):hover { background: var(--signal-dim); color: var(--signal); }
+.player-alphabet { display: flex; align-items: center; gap: 24px; padding: 20px 0 16px; border-bottom: 1px solid var(--line); }
+.player-alphabet-label { flex-shrink: 0; font-size: 13px; color: var(--mute); }
+.player-alphabet-keys { display: flex; flex: 1; flex-wrap: wrap; gap: 4px; min-width: 0; }
+.player-alphabet-keys button { flex: 1 0 30px; min-width: 30px; height: 36px; padding: 0 4px; border: 1px solid transparent; background: transparent; color: var(--chalk); font-family: var(--font-mono); font-size: 14px; font-weight: 500; cursor: pointer; transition: background-color 160ms, color 160ms, border-color 160ms; }
+.player-alphabet-keys button:not(:disabled):hover { border-color: var(--line-2); background: var(--signal-dim); color: var(--signal); }
+.player-alphabet-keys button[aria-current="location"] { background: var(--signal); color: var(--paper); border-color: var(--signal); }
+.player-alphabet-keys button[aria-current="location"]:not(:disabled):hover { background: var(--signal); color: var(--paper); border-color: var(--signal); }
+.player-alphabet-keys button:disabled { color: var(--mute); opacity: .35; cursor: default; }
+.player-directory button:focus-visible, .player-directory-table:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
+.player-directory-status { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 20px; margin: 14px 0 12px; font-size: 13px; color: var(--mute); }
+.player-count-divider { padding: 0 10px; }
+.player-directory .player-directory-table { margin: 0; }
+.player-directory-table table { min-width: 1000px; }
+.player-directory-table th, .player-directory-table td { white-space: nowrap; }
+.player-sort-arrow { margin-left: 10px; color: var(--signal); }
+.player-directory-table tbody tr { transition: background-color 180ms; }
+.player-directory-table .player-row-located { background: var(--signal-dim); }
+.player-directory-table .player-row-located td:first-child { box-shadow: inset 2px 0 var(--signal); }
+.player-search-empty .text-link { margin-top: 18px; }
+.player-profile .note > span { flex: 1; min-width: 0; max-width: none; }
+.player-profile .info-card > p { max-width: none; width: 100%; }
+@media (max-width: 1100px) {
+  .player-alphabet { align-items: flex-start; gap: 12px; }
+  .player-alphabet-label { padding-top: 9px; }
+  .player-alphabet-keys { display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); }
+  .player-alphabet-keys button { min-width: 0; }
+}
+@media (max-width: 600px) {
+  .player-directory-tools { flex-direction: column; gap: 12px; }
+  .player-sort { align-self: flex-end; }
+  .player-sort button { min-height: 40px; }
+  .player-alphabet { flex-direction: column; padding-top: 16px; gap: 8px; }
+  .player-alphabet-label { padding-top: 0; }
+  .player-alphabet-keys { width: 100%; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 4px; }
+  .player-alphabet-keys button { height: 40px; }
+  .player-directory-status { font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .player-directory button, .player-directory-table tbody tr { transition: none; }
+}

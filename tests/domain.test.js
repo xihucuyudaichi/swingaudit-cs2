@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {simulate,compare,verifyClaim} from '../src/domain.js';
+const d=JSON.parse(fs.readFileSync(new URL('../src/demo.json',import.meta.url)));
+test('scenario replaces contribution without changing baseline',()=>{const original=JSON.stringify(d);const r=simulate(d,'demo-event-09',1,[{playerId:'demo-player-03',score:10,award:'MVP'},{playerId:'demo-player-02',score:2,award:'无'}]);assert.deepEqual(r.slice(0,3).map(x=>[x.handle,x.total_honor]),[['ASTER',64],['MORROW',63],['VECTOR',62]]);assert.equal(JSON.stringify(d),original)});
+test('existing event subtracts old contribution',()=>{const r=simulate(d,'demo-event-01',.75,[{playerId:'demo-player-01',score:10.5,award:'无'}]);assert.equal(r.find(x=>x.handle==='MORROW').total_honor,63)});
+test('MVP conflict rejected',()=>assert.throws(()=>simulate(d,'demo-event-09',1,[{playerId:'demo-player-01',score:10,award:'MVP'},{playerId:'demo-player-02',score:10,award:'MVP'}]),/MVP/));
+test('missing data does not become zero',()=>assert.equal(compare(d,'demo-player-01','demo-player-02',{season:'2026',metric:'grand_finals'}).status,'missing'));
+test('reverse claim not supported',()=>{const r=verifyClaim(d,'VECTOR Rating 比 ASTER 高，所以年度排名更高',{season:'2026',metric:'overall'});assert.equal(r.claims[0].verdict,'不支持');assert.equal(r.claims[1].verdict,'证据不足')});

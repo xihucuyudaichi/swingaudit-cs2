@@ -1,0 +1,35 @@
+# Dependencies and generated output
+node_modules/
+dist/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+# Credentials and private user state
+.env
+.env.*
+!.env.example
+*.local.json
+*.local.py
+*.pem
+*.key
+*.sqlite3*
+*.db
+# Local development / audit history
+.planning/
+.oil-ui/
+verification/
+task_plan.md
+findings.md
+progress.md
+ENGINEERING_PROGRESS.md
+PRD.md
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+# Research downloads are not needed to run the released snapshot
+/data/source-audit/*
+!/data/source-audit/iftv/

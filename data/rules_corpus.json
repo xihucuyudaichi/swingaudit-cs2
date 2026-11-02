@@ -1,0 +1,166 @@
+{
+  "version": "2.1",
+  "updated_at": "2026-11-01",
+  "description": "HLTV 官方评分标准与常见社区争议参考",
+  "documents": [
+    {
+      "rule_id": "RULE-R30-01",
+      "title": "HLTV Rating 3.0 评分构成与关键回合贡献（Round Swing）",
+      "category": "rating_system",
+      "keywords": [
+        "rating 3.0",
+        "round swing",
+        "eco-adjusted",
+        "经济修正",
+        "回合胜率",
+        "子评分",
+        "impact"
+      ],
+      "summary": "HLTV 于 2025 年 8 月推出 Rating 3.0，取消旧版固定公式的 Impact，改为综合考量经济修正后的击杀、伤害、存活、有效回合参与（KAST）、多杀表现，以及新增的“回合胜率影响（Round Swing）”。",
+      "detail": "Rating 3.0 会根据每一回合双方的枪械经济与存活人数，评估每次击杀或存活对赢下该回合的实际作用：大幅降低长枪局刷对方经济局（Eco）的数据加成，同时提高手枪局翻盘、开局破点与少打多残局的分量。",
+      "source_title": "HLTV: Introducing Rating 3.0",
+      "source_url": "https://www.hltv.org/news/42485/introducing-rating-30"
+    },
+    {
+      "rule_id": "RULE-R30-02",
+      "title": "HLTV Rating 3.0 对回合末保枪击杀（Exit Kills）的判定规则",
+      "category": "rating_system",
+      "keywords": [
+        "保枪",
+        "exit kills",
+        "出口击杀",
+        "c4",
+        "拆包",
+        "刷数据",
+        "存活率",
+        "dpr",
+        "毒瘤"
+      ],
+      "summary": "HLTV 于 2026 年 10 月更新了 Rating 3.0 细节：当 C4 炸弹倒计时不足 10 秒（防守方无拆弹器）或不足 5 秒（有拆弹器）且无人正在拆包时，进攻方击杀撤退保枪人员不再计入回合胜率加成。",
+      "detail": "因此在核实“某位选手是不是只会保枪刷 K/D”时，不能只看他死得少，还要结合他在关键局的胜率贡献、残局获胜表现、最后一人存活比例以及淘汰赛硬仗发挥来综合判断。",
+      "source_title": "HLTV: Rating 3.0 receives small accuracy improvements",
+      "source_url": "https://www.hltv.org/news/45596/rating-30-receives-small-accuracy-improvements"
+    },
+    {
+      "rule_id": "RULE-ATTR-01",
+      "title": "HLTV 七大比赛风格维度与同位置对比原则",
+      "category": "role_alignment",
+      "keywords": [
+        "attributes",
+        "29项",
+        "风格",
+        "生态位",
+        "突破手",
+        "自由人",
+        "狙击手",
+        "跨位置",
+        "分位",
+        "雷达图"
+      ],
+      "summary": "HLTV 将选手比赛风格划分为七个维度：火力输出、进点突破、补枪配合、开局首杀、残局收割、狙击发挥与道具支援，细分为 29 项具体比赛数据。",
+      "detail": "除了火力输出反映整体面板外，其余六项主要体现选手在队内的场上分工。把冲在最前面的突破手与负责断后残局的自由人、或者专职主狙直接比拼综合评分和存活率并不公平，只有放在相同位置群体中对比才更有参考价值。",
+      "source_title": "HLTV: Attributes receive an overhaul with 29 new metrics",
+      "source_url": "https://www.hltv.org/news/45755/hltv-attributes-receive-an-overhaul-with-29-new-metrics"
+    },
+    {
+      "rule_id": "RULE-ATTR-02",
+      "title": "突破手开路与自由人残局收割的不同评价重点",
+      "category": "role_alignment",
+      "keywords": [
+        "tradeable deaths",
+        "可被补枪",
+        "first duel",
+        "首次交火",
+        "首杀",
+        "last alive",
+        "bait kills",
+        "突破",
+        "自由人"
+      ],
+      "summary": "评价突破手应重点看开局交火时间、主动找首杀比例，以及阵亡后队友能否及时补枪；评价自由人则重点看残局存活率、下包后守包表现以及残局翻盘能力。",
+      "detail": "突破手需要第一时间进点拉枪线，阵亡次数自然偏高，只要能频繁创造首杀机会或让队友顺利补枪，就是合格的团队尖刀；而自由人存活到回合末属于正常战术安排，关键在于能否把存活转化为残局胜利。",
+      "source_title": "HLTV: Attributes receive an overhaul with 29 new metrics",
+      "source_url": "https://www.hltv.org/news/45755/hltv-attributes-receive-an-overhaul-with-29-new-metrics"
+    },
+    {
+      "rule_id": "RULE-RWS-01",
+      "title": "国内对战平台 RWS 与职业比赛 Rating 3.0 的区别",
+      "category": "metric_scope",
+      "keywords": [
+        "rws",
+        "round win shares",
+        "5e",
+        "5eplay",
+        "完美世界",
+        "天梯",
+        "路人",
+        "赢局",
+        "口径混淆"
+      ],
+      "summary": "国内对战平台（5EPlay、完美世界竞技平台）常见的 RWS 只在赢下的回合按伤害占比（70%）和下包/拆包（30%）分摊分数；输掉的回合哪怕拿到四杀也是 0 分，且不区分长枪局和经济局。",
+      "detail": "职业比赛与 HLTV 年度评选从不使用平台 RWS。因为 RWS 很容易被刷经济局伤害拉高，同时完全抹杀了失利回合里的高价值残局和道具支援，不能直接拿来评判职业选手的赛场作用。",
+      "source_title": "HLTV Rating 3.0 与平台常见指标对比",
+      "source_url": "https://www.hltv.org/news/42485/introducing-rating-30"
+    },
+    {
+      "rule_id": "RULE-TOP20-01",
+      "title": "HLTV 年度 Top 20 选手评选的五大核心标准",
+      "category": "top20_criteria",
+      "keywords": [
+        "top 20",
+        "mvp",
+        "evp",
+        "评选标准",
+        "大赛",
+        "淘汰赛",
+        "major",
+        "样本量"
+      ],
+      "summary": "HLTV 年度 Top 20 主要从五个方面综合评定：① 对阵世界前五、前十强队及大赛淘汰赛舞台的硬仗发挥；② 全年获得的 MVP 与 EVP 荣誉数量；③ 赛事含金量（Major 与卡托维兹、科隆等顶级大赛分量最重）；④ 足够的大赛出场地图数；⑤ 全年表现的稳定性。",
+      "detail": "年度排名绝不是简单按全年平均 Rating 从高到低排列。Major 与顶级大赛的个人荣誉、场馆淘汰赛发挥往往起决定性作用，同时选手需要在顶级赛事中打满足够的地图场次才具备评选资格。",
+      "source_title": "HLTV: Top 20 players of 2025 final list",
+      "source_url": "https://www.hltv.org/news/43492/top-20-players-of-2025-final-list"
+    },
+    {
+      "rule_id": "RULE-TOP20-02",
+      "title": "年度 Top 20 榜首荣誉比拼与中游名次的拉开依据",
+      "category": "top20_criteria",
+      "keywords": [
+        "双层预测",
+        "中段归因",
+        "荣誉分倒挂",
+        "残差",
+        "强敌差值",
+        "zywoo",
+        "donk",
+        "ropz",
+        "sh1ro",
+        "molodoy"
+      ],
+      "summary": "年度榜单前五名通常由 Major 与顶级大赛的 MVP、EVP 荣誉数量决定基本座次（例如 2025 年 ZywOo 凭借含双 Major 在内的 8 座 MVP 排第 1，donk 4 座 MVP 排第 2）；而第 6 至 20 名之间荣誉数量接近，主要靠对阵强队发挥与大赛出场稳定性拉开差距。",
+      "detail": "当两位选手荣誉数量相近，甚至有人在普通赛事拿过 MVP 但总排名反而更靠后时（如 2025 年 sh1ro 凭 5 次大赛 EVP 排第 5，高于 2 MVP + 2 EVP 的 molodoy 第 6），关键就在于谁面对世界前五、前十强队时表现更硬朗、顶级大赛有效场次更多。",
+      "source_title": "HLTV 2025 年度 Top 20 评选案例解析",
+      "source_url": "https://www.hltv.org/news/43610/top-20-players-of-2025-zywoo-1"
+    },
+    {
+      "rule_id": "RULE-VERIFY-01",
+      "title": "如何查证“只会打弱队 / 大赛软脚虾”这类说法",
+      "category": "fact_checking",
+      "keywords": [
+        "只会打弱队",
+        "刷弱队",
+        "软脚虾",
+        "硬仗",
+        "大赛",
+        "vstop5",
+        "vstop10",
+        "证据不足",
+        "缺失"
+      ],
+      "summary": "判断一位选手是不是“只会打弱队”或“一到大舞台就隐身”，需要同时核对三项记录：① 全年各项赛事的整体 Rating 与参赛地图数；② 面对世界前五、前十、前二十强队时的交手表现；③ 在 Major 及顶级大赛中的具体分站成绩。",
+      "detail": "如果某位选手暂未收录对阵前五、前十强队的细分数据，或者全年大赛出场不足 20 张地图，只能说明现有比赛样本还不够充分，不能因为缺少记录就直接断定他“打不了强队”。",
+      "source_title": "赛事数据查证原则说明",
+      "source_url": "https://github.com/bootsh-zvuat/IFTV-TOP20"
+    }
+  ]
+}

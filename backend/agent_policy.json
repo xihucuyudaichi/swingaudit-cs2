@@ -1,0 +1,14 @@
+{
+  "max_model_turns": 5,
+  "max_tools_per_turn": 6,
+  "max_tool_executions": 16,
+  "max_validation_repairs": 1,
+  "run_timeout_seconds": 110,
+  "max_history_bytes": 60000,
+  "max_tool_bytes": 12000,
+  "http_max_retries": 1,
+  "retry_base_seconds": 0.5,
+  "retry_max_delay_seconds": 3,
+  "temperature": 0.2,
+  "enable_thinking": false
+}

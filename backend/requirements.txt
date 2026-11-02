@@ -1,0 +1,7 @@
+PyYAML
+openpyxl
+numpy
+scikit-learn
+scipy
+
+jsonschema>=4.25.1,<5

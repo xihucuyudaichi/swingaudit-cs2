@@ -1,0 +1,6 @@
+{
+  "base_url": "https://your-model-service.example/v1",
+  "credential_source": "backend/credentials.local.py",
+  "timeout_seconds": 60,
+  "max_tokens": 8192
+}

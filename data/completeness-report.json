@@ -1,0 +1,649 @@
+{
+  "complete": false,
+  "checked_at": "2026-11-02T03:12:48.451695+00:00",
+  "source": "https://github.com/bootsh-zvuat/IFTV-TOP20",
+  "files": [
+    {
+      "file": "if_sim_2024_events.xlsx",
+      "rows": 1567,
+      "sha256": "d519080d6c518a2e90c6055f0f5b5706521d0eb44bee046d5241e501234ddf68",
+      "hash_matches": true,
+      "sheet": "data",
+      "null_fields": {
+        "年份": 0,
+        "赛事名称": 0,
+        "赛事级别": 0,
+        "赛事权重": 1567,
+        "选手ID": 0,
+        "选手名": 0,
+        "队伍": 0,
+        "队伍名次": 0,
+        "荣誉类型": 0,
+        "荣誉顺位": 0,
+        "Rating": 0,
+        "ADR": 0,
+        "KPR": 0,
+        "地图数": 0,
+        "vsTop5": 1334,
+        "vsTop10": 1334,
+        "vsTop20": 1334,
+        "vsTop30": 1334,
+        "vsTop50": 1334
+      },
+      "url": "https://raw.githubusercontent.com/bootsh-zvuat/IFTV-TOP20/main/data/if_sim_2024_events.xlsx"
+    },
+    {
+      "file": "if_sim_2024_baseline.xlsx",
+      "rows": 20,
+      "sha256": "12190e5d7071a13b2843f34b5afc5690919d091cb2d0dbf60c443a63cb9f06e4",
+      "hash_matches": true,
+      "sheet": "data",
+      "null_fields": {
+        "年份": 0,
+        "名次": 0,
+        "选手名": 0,
+        "选手ID": 0
+      },
+      "url": "https://raw.githubusercontent.com/bootsh-zvuat/IFTV-TOP20/main/data/if_sim_2024_baseline.xlsx"
+    },
+    {
+      "file": "if_sim_2025_events.xlsx",
+      "rows": 1735,
+      "sha256": "edf9ede79d931f8ac2347399c78fb3f688361d0f46b696564993b55977b1b9e7",
+      "hash_matches": true,
+      "sheet": "data",
+      "null_fields": {
+        "年份": 0,
+        "赛事名称": 0,
+        "赛事级别": 0,
+        "赛事权重": 1735,
+        "选手ID": 0,
+        "选手名": 0,
+        "队伍": 0,
+        "队伍名次": 0,
+        "荣誉类型": 0,
+        "荣誉顺位": 0,
+        "Rating": 0,
+        "ADR": 0,
+        "KPR": 0,
+        "地图数": 0,
+        "vsTop5": 1457,
+        "vsTop10": 1457,
+        "vsTop20": 1457,
+        "vsTop30": 1457,
+        "vsTop50": 1457
+      },
+      "url": "https://raw.githubusercontent.com/bootsh-zvuat/IFTV-TOP20/main/data/if_sim_2025_events.xlsx"
+    },
+    {
+      "file": "if_sim_2025_baseline.xlsx",
+      "rows": 20,
+      "sha256": "1cbe701cff1cc96d8120239ffd0bce22c6698c52ef39dc42f8c2ce558f84efd1",
+      "hash_matches": true,
+      "sheet": "data",
+      "null_fields": {
+        "年份": 0,
+        "名次": 0,
+        "选手名": 0,
+        "选手ID": 0
+      },
+      "url": "https://raw.githubusercontent.com/bootsh-zvuat/IFTV-TOP20/main/data/if_sim_2025_baseline.xlsx"
+    },
+    {
+      "file": "hltv_opponent_2024.xlsx",
+      "rows": 20,
+      "sha256": "0cfe9df539b40925b4fbca8a2cae63cd23e44d0be35df7b26ee6e88b38a03eb4",
+      "hash_matches": true,
+      "sheet": "opponent",
+      "null_fields": {
+        "年份": 0,
+        "选手": 0,
+        "地图数": 0,
+        "KD比值": 0,
+        "Impact": 0,
+        "ADR": 0,
+        "KPR": 0,
+        "vsTop5": 0,
+        "vsTop10": 0,
+        "vsTop20": 0,
+        "vsTop30": 0,
+        "vsTop50": 0,
+        "vsTop5图数": 0,
+        "vsTop20图数": 0,
+        "来源URL": 0
+      },
+      "url": "https://raw.githubusercontent.com/bootsh-zvuat/IFTV-TOP20/main/data/hltv_opponent_2024.xlsx"
+    },
+    {
+      "file": "hltv_opponent_2025.xlsx",
+      "rows": 20,
+      "sha256": "dc012ed674bff4cdce53615ec9eabcb56c3f389c2122641a278778ce212acdc0",
+      "hash_matches": true,
+      "sheet": "opponent",
+      "null_fields": {
+        "年份": 0,
+        "选手": 0,
+        "地图数": 0,
+        "KD比值": 0,
+        "Impact": 0,
+        "ADR": 0,
+        "KPR": 0,
+        "vsTop5": 0,
+        "vsTop10": 0,
+        "vsTop20": 0,
+        "vsTop30": 0,
+        "vsTop50": 0,
+        "vsTop5图数": 0,
+        "vsTop20图数": 0,
+        "来源URL": 0
+      },
+      "url": "https://raw.githubusercontent.com/bootsh-zvuat/IFTV-TOP20/main/data/hltv_opponent_2025.xlsx"
+    }
+  ],
+  "seasons": {
+    "2012": {
+      "events": 28,
+      "rows": 1027,
+      "declared_rows_match": true,
+      "players": 457,
+      "opponent_players": 0,
+      "official_ranked_players": 0,
+      "duplicate_player_event_keys": 0,
+      "invalid_numeric_rows": 0,
+      "missing_rating_version_rows": 0,
+      "missing_period_rows": 0,
+      "missing_source_weight_rows": 0
+    },
+    "2013": {
+      "events": 65,
+      "rows": 3459,
+      "declared_rows_match": true,
+      "players": 465,
+      "opponent_players": 0,
+      "official_ranked_players": 20,
+      "duplicate_player_event_keys": 0,
+      "invalid_numeric_rows": 0,
+      "missing_rating_version_rows": 0,
+      "missing_period_rows": 0,
+      "missing_source_weight_rows": 0
+    },
+    "2014": {
+      "events": 69,
+      "rows": 3006,
+      "declared_rows_match": true,
+      "players": 465,
+      "opponent_players": 0,
+      "official_ranked_players": 21,
+      "duplicate_player_event_keys": 0,
+      "invalid_numeric_rows": 0,
+      "missing_rating_version_rows": 0,
+      "missing_period_rows": 0,
+      "missing_source_weight_rows": 0
+    },
+    "2015": {
+      "events": 81,
+      "rows": 4299,
+      "declared_rows_match": true,
+      "players": 465,
+      "opponent_players": 0,
+      "official_ranked_players": 21,
+      "duplicate_player_event_keys": 0,
+      "invalid_numeric_rows": 0,
+      "missing_rating_version_rows": 0,
+      "missing_period_rows": 0,
+      "missing_source_weight_rows": 0
+    },
+    "2016": {
+      "events": 92,
+      "rows": 3270,
+      "declared_rows_match": true,
+      "players": 465,
+      "opponent_players": 0,
+      "official_ranked_players": 21,
+      "duplicate_player_event_keys": 0,
+      "invalid_numeric_rows": 0,
+      "missing_rating_version_rows": 0,
+      "missing_period_rows": 0,
+      "missing_source_weight_rows": 0
+    },
+    "2017": {
+      "events": 72,
+      "rows": 2486,
+      "declared_rows_match": true,
+      "players": 465,
+      "opponent_players": 0,
+      "official_ranked_players": 21,
+      "duplicate_player_event_keys": 0,
+      "invalid_numeric_rows": 0,
+      "missing_rating_version_rows": 0,
+      "missing_period_rows": 0,
+      "missing_source_weight_rows": 0
+    },
+    "2018": {
+      "events": 70,
+      "rows": 2116,
+      "declared_rows_match": true,
+      "players": 465,
+      "opponent_players": 20,
+      "official_ranked_players": 21,
+      "duplicate_player_event_keys": 0,
+      "invalid_numeric_rows": 0,
+      "missing_rating_version_rows": 0,
+      "missing_period_rows": 0,
+      "missing_source_weight_rows": 0
+    },
+    "2019": {
+      "events": 74,
+      "rows": 1889,
+      "declared_rows_match": true,
+      "players": 465,
+      "opponent_players": 20,
+      "official_ranked_players": 21,
+      "duplicate_player_event_keys": 0,
+      "invalid_numeric_rows": 0,
+      "missing_rating_version_rows": 0,
+      "missing_period_rows": 0,
+      "missing_source_weight_rows": 0
+    },
+    "2020": {
+      "events": 72,
+      "rows": 2844,
+      "declared_rows_match": true,
+      "players": 465,
+      "opponent_players": 20,
+      "official_ranked_players": 21,
+      "duplicate_player_event_keys": 0,
+      "invalid_numeric_rows": 0,
+      "missing_rating_version_rows": 0,
+      "missing_period_rows": 0,
+      "missing_source_weight_rows": 0
+    },
+    "2021": {
+      "events": 86,
+      "rows": 3049,
+      "declared_rows_match": true,
+      "players": 465,
+      "opponent_players": 20,
+      "official_ranked_players": 21,
+      "duplicate_player_event_keys": 0,
+      "invalid_numeric_rows": 0,
+      "missing_rating_version_rows": 0,
+      "missing_period_rows": 0,
+      "missing_source_weight_rows": 0
+    },
+    "2022": {
+      "events": 79,
+      "rows": 2849,
+      "declared_rows_match": true,
+      "players": 465,
+      "opponent_players": 30,
+      "official_ranked_players": 20,
+      "duplicate_player_event_keys": 0,
+      "invalid_numeric_rows": 0,
+      "missing_rating_version_rows": 0,
+      "missing_period_rows": 0,
+      "missing_source_weight_rows": 0
+    },
+    "2023": {
+      "events": 74,
+      "rows": 2539,
+      "declared_rows_match": true,
+      "players": 465,
+      "opponent_players": 25,
+      "official_ranked_players": 21,
+      "duplicate_player_event_keys": 0,
+      "invalid_numeric_rows": 0,
+      "missing_rating_version_rows": 0,
+      "missing_period_rows": 0,
+      "missing_source_weight_rows": 0
+    },
+    "2024": {
+      "events": 22,
+      "rows": 1567,
+      "declared_rows_match": true,
+      "players": 457,
+      "opponent_players": 30,
+      "official_ranked_players": 20,
+      "duplicate_player_event_keys": 0,
+      "invalid_numeric_rows": 0,
+      "missing_rating_version_rows": 1567,
+      "missing_period_rows": 1567,
+      "missing_source_weight_rows": 1567
+    },
+    "2025": {
+      "events": 26,
+      "rows": 2127,
+      "declared_rows_match": true,
+      "players": 467,
+      "opponent_players": 20,
+      "official_ranked_players": 20,
+      "duplicate_player_event_keys": 0,
+      "invalid_numeric_rows": 0,
+      "missing_rating_version_rows": 1735,
+      "missing_period_rows": 1735,
+      "missing_source_weight_rows": 1735
+    },
+    "2026": {
+      "events": 19,
+      "rows": 2368,
+      "declared_rows_match": true,
+      "players": 447,
+      "opponent_players": 10,
+      "official_ranked_players": 0,
+      "duplicate_player_event_keys": 0,
+      "invalid_numeric_rows": 0,
+      "missing_rating_version_rows": 0,
+      "missing_period_rows": 0,
+      "missing_source_weight_rows": 0
+    }
+  },
+  "four_layers_status": {
+    "L1_tournament_honors": {
+      "name": "L1 分站赛事、历年 Top20 与荣誉底座 (2012–2026)",
+      "status": "已接入 2012–2026 共 15 个赛季 6,943 人次选手档案、38,895 条分站记录（全赛季均达 447–467 人）+ 2013–2025 连续 13 年官方 Top 20 (260人次) + 24 届 Major 档案 + Valve VRS 2026 积分与赛事权重",
+      "configured_tier_weights": {
+        "Major": 1.0,
+        "超级精英赛": 0.85,
+        "精英赛": 0.75,
+        "大型赛事": 0.6,
+        "中型赛事": 0.35
+      },
+      "official_verifications_count": 3
+    },
+    "L2_high_pressure_opponents": {
+      "name": "L2 强敌、地图池、CT/T 阵营与 Major 决赛数据",
+      "status": "已接入 6,943 人次选手跨赛季地图池、2,102 名选手×13 张地图×CT/T 阵营拆分 (124,827行) + 300 名 CS2 选手 CT/T 官方角色与 Rating + 24 届 Major 决赛逐图统计 + 2026 Rating 3.0 & Swing",
+      "opponent_split_players_per_year": 30
+    },
+    "L3_tactical_style_roles": {
+      "name": "L3 战术风格、真实 Demo 角色与回合经济遥测",
+      "status": "已接入 Jamie-Packer 306 名选手 awpy Demo 实测 + pachellber 1,416 名选手 Rating 3.0 与 1,202 名选手回合发枪/道具经济 + OpenCS2 11.17 万次对枪 + SneakyZero 42 万行回合经济，支撑 15 赛季 6,943 人次 100% T2 角色对齐",
+      "candidates_2024": 457,
+      "candidates_2025": 467,
+      "ward_silhouette_2025": 0.8163
+    },
+    "L4_rules_and_ontology": {
+      "name": "L4 历年榜单专访、Valve VRS 规则与评价领域本体 (RAG)",
+      "status": "已构建 HLTV Rating 3.0 / Attributes 29 项指标 / Top 20 准则 / RWS 辨析 / 2013–2022 官方评选专访链接与领域本体",
+      "rules_doc_count": 8,
+      "ontology_entities_count": 6
+    }
+  },
+  "gaps": [
+    "2026 官方年终 Top 20 榜单尚未公布（当前展示截至 2026-10 已完赛实测与 Valve VRS 全球战队积分）。",
+    "IFTV 2024–2025 原始分站 Excel 缺精确日期与原始权重列（已通过 Valve VRS、One-Studio、Ageha6912 及 L1 权重表交叉补全）。",
+    "Jamie-Packer 真实 Demo 角色特征覆盖 306 名职业选手，其余历史选手采用 HLTV 投掷物/爆头/首杀实测面板与位置基线校准（均已显式标注 source_status）。",
+    "已识别并隔离剔除 4 组外部缺陷数据源：devanshgupta0308（纯虚拟练习数据）、sergionefedov（含 15% 估算与错误 Major 标注）、kimetsuu（2026 失败回退合成值）、pr4nut（匿名脱敏数据）。"
+  ],
+  "repairs": [
+    "已完成 2012–2026 共 15 个赛季、24 组公开真实数据集（含 pachellber CS2-ECONEFFICIENCY、nmwalsh 1.4万HLTV ID、gungorMetehan Major MVP/EVP、DSCKGEC 844人、RLinV1 Top20阵容）的清洗、去重与全赛季选手库扩容（每年 447–467 人，总计 6,943 人次 / 38,895 条参赛记录）。",
+    "新增选手对比与档案页的 CT/T 阵营拆分、13 张比赛地图池、Major 决赛实测 Rating/Swing 及生涯手雷/互救面板。",
+    "T2 角色对齐升级为接入 Jamie-Packer awpy Demo 实测（TAPD/OAP/PODT/POKT/3D站位）与 OpenCS2/SneakyZero 2026 遥测，并覆盖全部 15 个赛季。",
+    "T4 双层预测修正为 RF/GBR/Ridge 各自独立的边际归因，并新增 2018→2019 至 2024→2025 连续 7 年滚动留出回测与 2026 赛季实时追踪榜。",
+    "2024 年两位同名 Lucky（源选手 ID 13497 与 19069）保持独立档案拆分。"
+  ],
+  "integrated_datasets_count": 23,
+  "quarantined_datasets_count": 4,
+  "verified_datasets_registry": [
+    {
+      "id": "iftv-top20",
+      "name": "bootsh-zvuat/IFTV-TOP20 (2024-2025 分站赛事与强敌基线)",
+      "layer": "L1/L2",
+      "years": "2024–2025",
+      "rows": 3302,
+      "license": "MIT (Code)",
+      "url": "https://github.com/bootsh-zvuat/IFTV-TOP20",
+      "status": "integrated_primary"
+    },
+    {
+      "id": "ageha6912-majors",
+      "name": "Ageha6912/cs-major-archive (2013-2025 Top20 + 24届Major决赛统计)",
+      "layer": "L1/L2",
+      "years": "2013–2026",
+      "rows": 544,
+      "license": "Public Archive",
+      "url": "https://github.com/Ageha6912/cs-major-archive",
+      "status": "integrated_primary"
+    },
+    {
+      "id": "santtu777-hltv-top",
+      "name": "Santtu777/hltv_top (2018-2024 Top50 LAN/大赛/Major/MVP/EVP/S级冠军)",
+      "layer": "L1/T4",
+      "years": "2018–2024",
+      "rows": 2384,
+      "license": "MIT",
+      "url": "https://github.com/Santtu777/hltv_top",
+      "status": "integrated_primary"
+    },
+    {
+      "id": "markzhdan-top20",
+      "name": "markzhdan/hltv-top-20-predictions (2018-2024 76维特征 + 2012-2025 MVP)",
+      "layer": "L1/L2/T4",
+      "years": "2012–2025",
+      "rows": 529,
+      "license": "Academic Public",
+      "url": "https://github.com/markzhdan/hltv-top-20-predictions",
+      "status": "integrated_primary"
+    },
+    {
+      "id": "danilofuchs-top20",
+      "name": "danilofuchs/hltv-top20-evolution (2013-2022 官方评选专访链接与档案)",
+      "layer": "L1/L4",
+      "years": "2013–2022",
+      "rows": 282,
+      "license": "MIT",
+      "url": "https://github.com/danilofuchs/hltv-top20-evolution",
+      "status": "integrated_primary"
+    },
+    {
+      "id": "raymondtoh94-hltv",
+      "name": "raymondtoh94/csgo-players-stats-hltv (2102名选手×13地图×CT/T/Both拆分)",
+      "layer": "L2",
+      "years": "2012–2024",
+      "rows": 124827,
+      "license": "Kaggle Public",
+      "url": "https://www.kaggle.com/datasets/raymondtoh94/csgo-players-stats-hltv",
+      "status": "integrated_primary"
+    },
+    {
+      "id": "tedtay-csgo",
+      "name": "tedtay/CS-GO-Pro-Matches-Comprehensive-Dataset (逐图10人面板与闪光/首杀)",
+      "layer": "L2/L3",
+      "years": "2012–2023",
+      "rows": 126872,
+      "license": "MIT",
+      "url": "https://github.com/tedtay/CS-GO-Pro-Matches-Comprehensive-Dataset",
+      "status": "integrated_primary"
+    },
+    {
+      "id": "onestudio-hltv",
+      "name": "One-Studio/hltv-stats (68,963场HLTV比赛ID/时间戳 + 5,494场赛事)",
+      "layer": "L2",
+      "years": "2012–2022",
+      "rows": 81208,
+      "license": "GitHub Public",
+      "url": "https://github.com/One-Studio/hltv-stats",
+      "status": "integrated_primary"
+    },
+    {
+      "id": "valve-vrs",
+      "name": "ValveSoftware/counter-strike_regional_standings (官方VRS积分与HLTV赛事样本)",
+      "layer": "L1/L2/L4",
+      "years": "2022–2026.10",
+      "rows": 9660,
+      "license": "Valve Official",
+      "url": "https://github.com/ValveSoftware/counter-strike_regional_standings",
+      "status": "integrated_primary"
+    },
+    {
+      "id": "ektarr-cs2",
+      "name": "ektarr/counter-strike-pro-matches (2023-2026.10 CS2逐场/逐图10人统计)",
+      "layer": "L2",
+      "years": "2023–2026.10",
+      "rows": 23639,
+      "license": "CC BY-SA 4.0",
+      "url": "https://www.kaggle.com/datasets/ektarr/counter-strike-pro-matches",
+      "status": "integrated_primary"
+    },
+    {
+      "id": "eupeutro-blast-2026",
+      "name": "eupeutro/blast-rivals-2026-cs2-match-statistics (2026 Rating 3.0 & Swing)",
+      "layer": "L2",
+      "years": "2026",
+      "rows": 771,
+      "license": "Kaggle Public",
+      "url": "https://www.kaggle.com/datasets/eupeutro/blast-rivals-2026-cs2-match-statistics",
+      "status": "integrated_primary"
+    },
+    {
+      "id": "jamiepacker-roles",
+      "name": "Jamie-Packer/cs2-playstyle-dataset-2024 (306名选手Demo实测TAPD/OAP/PODT/POKT/3D站位)",
+      "layer": "L3/T2",
+      "years": "2024",
+      "rows": 306,
+      "license": "CC BY 4.0",
+      "url": "https://github.com/Jamie-Packer/cs2-playstyle-dataset-2024",
+      "status": "integrated_primary"
+    },
+    {
+      "id": "opencs2-telemetry",
+      "name": "blanchon/opencs2_dataset (2026 Demo解析11.17万对枪/击杀 + 873.9万烟闪状态)",
+      "layer": "L3/T2",
+      "years": "2026",
+      "rows": 9148079,
+      "license": "CC BY 4.0",
+      "url": "https://huggingface.co/datasets/blanchon/opencs2_dataset",
+      "status": "integrated_primary"
+    },
+    {
+      "id": "sneakyzero-economy",
+      "name": "sneakyzero/cs2-pro-round-economy (2026 42万行选手回合经济与SteamID实名映射)",
+      "layer": "L2/L3",
+      "years": "2026",
+      "rows": 552065,
+      "license": "HF Open",
+      "url": "https://huggingface.co/datasets/sneakyzero/cs2-pro-round-economy",
+      "status": "integrated_primary"
+    },
+    {
+      "id": "griffin-ts-rounds",
+      "name": "griffindesroches CS2 HLTV Rolling & Round-by-Round (滚动时序与逐回合序列)",
+      "layer": "L2/L3",
+      "years": "2024–2025",
+      "rows": 26043,
+      "license": "CC0",
+      "url": "https://www.kaggle.com/datasets/griffindesroches/cs2-professional-round-by-round-statistics-dataset",
+      "status": "integrated_reference"
+    },
+    {
+      "id": "esportsbench-cs",
+      "name": "EsportsBench/EsportsBench Counter-Strike (24.09万行Liquipedia历史赛果索引)",
+      "layer": "L2",
+      "years": "2001–2026.09",
+      "rows": 240946,
+      "license": "CC BY-SA 3.0",
+      "url": "https://huggingface.co/datasets/EsportsBench/EsportsBench",
+      "status": "integrated_reference"
+    },
+    {
+      "id": "eshtiak-career",
+      "name": "eshtiakferdousmahi/cs2-player-stats (803名职业选手生涯汇总与手雷/互救指标)",
+      "layer": "L1/L3",
+      "years": "2012–2025",
+      "rows": 803,
+      "license": "Kaggle Public",
+      "url": "https://www.kaggle.com/datasets/eshtiakferdousmahi/cs2-player-stats",
+      "status": "integrated_primary"
+    },
+    {
+      "id": "livanoff-merfaruk",
+      "name": "livanoff & merfarukgnaydn CS:GO Rounds & Tournaments (7.49万回合经济+7.51万赛果)",
+      "layer": "L2/L3",
+      "years": "2013–2023",
+      "rows": 152110,
+      "license": "Kaggle Public",
+      "url": "https://www.kaggle.com/datasets/livanoff/csgo-esport-matches-round-data",
+      "status": "integrated_reference"
+    },
+    {
+      "id": "pachellber-econ-r30",
+      "name": "pachellber-marine/CS2-ECONEFFICIENCY (1,416名选手Rating 3.0 + 1,202名回合经济/发枪 + 300名CT/T官方位置)",
+      "layer": "L2/L3/T2",
+      "years": "2024–2026",
+      "rows": 4126,
+      "license": "MIT",
+      "url": "https://github.com/pachellber-marine/CS2-ECONEFFICIENCY",
+      "status": "integrated_primary"
+    },
+    {
+      "id": "nmwalsh-hltv-ids",
+      "name": "nmwalsh/HLTV-Scraper (14,171名职业选手官方HLTV ID与国籍 + 1,777场历史赛事索引)",
+      "layer": "L1/L2",
+      "years": "2012–2024",
+      "rows": 15948,
+      "license": "GitHub Public",
+      "url": "https://github.com/nmwalsh/HLTV-Scraper",
+      "status": "integrated_primary"
+    },
+    {
+      "id": "gungor-major-mvps",
+      "name": "gungorMetehan/csgo-cs2 (2013-2025历届Major全部130人次MVP/EVP官方核对名录)",
+      "layer": "L1",
+      "years": "2013–2025",
+      "rows": 1096,
+      "license": "GitHub Public",
+      "url": "https://github.com/gungorMetehan/csgo-cs2",
+      "status": "integrated_primary"
+    },
+    {
+      "id": "dsckgec-career",
+      "name": "DSCKGEC/CS-GO-Professionals (844名职业选手生涯实名、手雷伤害、互救率与KPR/DPR面板)",
+      "layer": "L1/L3",
+      "years": "2012–2024",
+      "rows": 1104,
+      "license": "GitHub Public",
+      "url": "https://github.com/DSCKGEC/CS-GO-Professionals",
+      "status": "integrated_primary"
+    },
+    {
+      "id": "rlinv1-top20-rosters",
+      "name": "RLinV1/HLTV-Web-Scraper (Top 20战队103名现役主力Rating 2.1/KAST/Impact/ADR与定妆照)",
+      "layer": "L1/L2",
+      "years": "2025–2026",
+      "rows": 103,
+      "license": "GitHub Public",
+      "url": "https://github.com/RLinV1/HLTV-Web-Scraper",
+      "status": "integrated_primary"
+    }
+  ],
+  "quarantined_datasets_registry": [
+    {
+      "id": "devanshgupta0308",
+      "name": "devanshgupta0308/cs2-player-performance-and-tournament-analytics",
+      "rows": 6000,
+      "reason": "实测选手名为 Player_325、战队为 Shadow Unit、赛事为 Autumn Invitational，属 100% 合成虚拟练习数据。",
+      "action": "已隔离剔除，严禁入库"
+    },
+    {
+      "id": "sergionefedov",
+      "name": "sergionefedov/counter-strike-competitive-scene-2012-2026",
+      "rows": 2560,
+      "reason": "作者自述约 15% 为估算/非真实数据，实测包含虚构 2026 PGL Lima Major 与错误的 Major MVP 标注。",
+      "action": "已隔离剔除，Major 与 Top20 改用 Ageha6912 与 Santtu777"
+    },
+    {
+      "id": "kimetsuu-2026",
+      "name": "kimetsuu/prediction_top20_hltv_cs2 (cohort_2026.csv)",
+      "rows": 35,
+      "reason": "源码证实抓取失败时自动回退生成合成 2026 候选池。",
+      "action": "已隔离剔除，2026 改用 ektarr + eupeutro + Ageha6912 + Valve VRS"
+    },
+    {
+      "id": "pr4nut-anon",
+      "name": "pr4nut/counter-strike-2-detailed-scoreboards-150-maps",
+      "rows": 2020,
+      "reason": "已抹除选手昵称与 SteamID，无法关联实名职业选手。",
+      "action": "仅留存审计记录，不接入实名选手库"
+    }
+  ]
+}

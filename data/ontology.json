@@ -1,0 +1,168 @@
+{
+  "version": "2.0",
+  "updated_at": "2026-10-30",
+  "domain": "CS2 Pro Player Multi-Dimensional Evaluation & HLTV Top 20 Audit Ontology",
+  "entities": [
+    {
+      "id": "Player",
+      "label": "职业选手",
+      "key_attributes": [
+        "id",
+        "name",
+        "year",
+        "source_ids",
+        "official_rank",
+        "tactical_role"
+      ]
+    },
+    {
+      "id": "Tournament",
+      "label": "分站赛事",
+      "key_attributes": [
+        "name",
+        "year",
+        "tier",
+        "configured_weight"
+      ]
+    },
+    {
+      "id": "PerformanceRecord",
+      "label": "赛事表现记录",
+      "key_attributes": [
+        "rating",
+        "maps",
+        "adr",
+        "kpr",
+        "award",
+        "team_place",
+        "source_file",
+        "row"
+      ]
+    },
+    {
+      "id": "OpponentSplit",
+      "label": "强敌分层表现",
+      "key_attributes": [
+        "vsTop5",
+        "vsTop10",
+        "vsTop20",
+        "vsTop30",
+        "vsTop50",
+        "vsTop5图数"
+      ]
+    },
+    {
+      "id": "TacticalNiche",
+      "label": "战术生态位",
+      "key_attributes": [
+        "cluster_id",
+        "role_name",
+        "silhouette_score",
+        "peer_group_size"
+      ]
+    },
+    {
+      "id": "RuleClause",
+      "label": "评价规则条文",
+      "key_attributes": [
+        "rule_id",
+        "category",
+        "title",
+        "source_url"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "from": "Player",
+      "relation": "participated_in",
+      "to": "Tournament",
+      "via": "PerformanceRecord"
+    },
+    {
+      "from": "Player",
+      "relation": "has_opponent_split",
+      "to": "OpponentSplit",
+      "constraint": "独立年度汇总口径，不可与分站加权近似直接混算"
+    },
+    {
+      "from": "Player",
+      "relation": "assigned_to_niche",
+      "to": "TacticalNiche",
+      "constraint": "经 StandardScaler -> PCA -> Ward/KMeans 聚类推断，需同位置分位对齐"
+    },
+    {
+      "from": "Tournament",
+      "relation": "weighted_by_tier",
+      "to": "RuleClause",
+      "constraint": "Major(1.00) > 超级精英赛(0.85) > 精英赛(0.75) > 大型赛事(0.60) > 中型赛事(0.35)"
+    },
+    {
+      "from": "PerformanceRecord",
+      "relation": "audited_by",
+      "to": "RuleClause",
+      "constraint": "缺失值保留为 null；样本 <20 图触发小样本提示"
+    }
+  ],
+  "task_routing_rules": {
+    "cross_role_comparison": {
+      "required_tools": [
+        "T1_multi_tier_query",
+        "T2_role_align"
+      ],
+      "required_rules": [
+        "RULE-ATTR-01",
+        "RULE-ATTR-02"
+      ],
+      "verifier_checks": [
+        "check_peer_percentile",
+        "check_sample_maps",
+        "check_scope_consistency"
+      ]
+    },
+    "claim_verification": {
+      "required_tools": [
+        "T1_multi_tier_query",
+        "T3_claim_fact_check"
+      ],
+      "required_rules": [
+        "RULE-R30-01",
+        "RULE-R30-02",
+        "RULE-RWS-01",
+        "RULE-VERIFY-01"
+      ],
+      "verifier_checks": [
+        "check_missing_not_counterevidence",
+        "check_rws_vs_rating3",
+        "check_source_row_citations"
+      ]
+    },
+    "top20_ranking_attribution": {
+      "required_tools": [
+        "T4_hybrid_predict",
+        "T1_multi_tier_query"
+      ],
+      "required_rules": [
+        "RULE-TOP20-01",
+        "RULE-TOP20-02"
+      ],
+      "verifier_checks": [
+        "check_two_stage_decomposition",
+        "check_official_mvp_discrepancy",
+        "check_holdout_boundary"
+      ]
+    },
+    "what_if_simulation": {
+      "required_tools": [
+        "T5_what_if_sandbox"
+      ],
+      "required_rules": [
+        "RULE-TOP20-01"
+      ],
+      "verifier_checks": [
+        "check_sandbox_isolation",
+        "check_assumption_manifest"
+      ]
+    }
+  }
+}

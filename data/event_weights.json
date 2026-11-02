@@ -1,0 +1,107 @@
+{
+  "version": "2.0",
+  "updated_at": "2026-10-30",
+  "description": "L1 分站赛事分级设定权重、单站荣誉计分参数与 HLTV 官方个案核对映射表（建模设定权重，非 HLTV 官方内部公式）",
+  "tier_weights": {
+    "Major": 1.0,
+    "超级精英赛": 0.85,
+    "精英赛": 0.75,
+    "大型赛事": 0.6,
+    "中型赛事": 0.35
+  },
+  "award_points": {
+    "MVP": 12.0,
+    "EVP": 5.5,
+    "无": 0.0
+  },
+  "placement_points": {
+    "冠军": 4.0,
+    "亚军": 2.5,
+    "四强": 1.2,
+    "八强": 0.5,
+    "小组淘汰": 0.0
+  },
+  "performance_bonus": {
+    "baseline_rating": 1.05,
+    "multiplier": 10.0,
+    "full_sample_maps": 10.0
+  },
+  "future_sandbox_events_2025": [
+    {
+      "event_id": "iem_chengdu_2025",
+      "event": "IEM Chengdu 2025",
+      "tier": "大型赛事",
+      "weight": 0.6,
+      "default_mvp": "zywoo",
+      "description": "年末大型国际分站赛（权重 0.60）"
+    },
+    {
+      "event_id": "blast_rivals_s2_2025",
+      "event": "BLAST Rivals 2025 Season 2",
+      "tier": "大型赛事",
+      "weight": 0.6,
+      "default_mvp": "donk",
+      "description": "年末焦点对抗赛（权重 0.60）"
+    },
+    {
+      "event_id": "major_december_2025",
+      "event": "Major December 2025",
+      "tier": "Major",
+      "weight": 1.0,
+      "default_mvp": "zywoo",
+      "description": "年底收官 Major 锦标赛（最高权重 1.00）"
+    }
+  ],
+  "official_verifications": {
+    "2025": {
+      "zywoo": {
+        "player_id": "zywoo",
+        "name": "ZywOo",
+        "official_rank": 1,
+        "snapshot_mvp": 7,
+        "official_mvp": 8,
+        "discrepancy_note": "2025 赛季共斩获 8 次赛事 MVP（含两届 Major MVP，分站赛事表收录其中 7 次），位列年度第 1 名。",
+        "source_url": "https://www.hltv.org/news/43610/top-20-players-of-2025-zywoo-1"
+      },
+      "donk": {
+        "player_id": "donk",
+        "name": "donk",
+        "official_rank": 2,
+        "snapshot_mvp": 4,
+        "official_mvp": 4,
+        "discrepancy_note": "2025 赛季收获 4 次赛事 MVP，全年赛事 Rating（1.44）与对阵 Top 5 强队表现（1.37）均居首位，因大赛 MVP 总数与 Major 冠军荣誉少于 ZywOo 位列年度第 2 名。",
+        "source_url": "https://www.hltv.org/news/43609/top-20-players-of-2025-donk-2"
+      },
+      "ropz": {
+        "player_id": "ropz",
+        "name": "ropz",
+        "official_rank": 3,
+        "snapshot_mvp": 0,
+        "official_mvp": 0,
+        "discrepancy_note": "2025 赛季凭借 5 次大赛 EVP、多冠战队核心表现与 168 张地图的稳定发挥，位列年度第 3 名。",
+        "source_url": "https://www.hltv.org/news/43492/top-20-players-of-2025-final-list"
+      }
+    }
+  },
+  "blum_2026_event_weights": {
+    "IEM Cologne Major 2026": 1.0,
+    "IEM Krakow 2026": 0.9,
+    "Esports World Cup 2026": 0.8,
+    "PGL Cluj-Napoca 2026": 0.75,
+    "BLAST Open Rotterdam 2026": 0.725,
+    "BLAST Open Porto 2026": 0.725,
+    "ESL Pro League Season 24": 0.725,
+    "IEM Rio 2026": 0.625,
+    "BLAST Rivals 2026 Season 1": 0.525,
+    "PGL Astana 2026": 0.45,
+    "StarLadder StarSeries Fall 2026": 0.4,
+    "IEM Atlanta 2026": 0.375,
+    "ESL Pro League Season 23": 0.375,
+    "BLAST Bounty 2026 Season 1 Finals": 0.35,
+    "FISSURE Playground 3": 0.325,
+    "CS Asia Championships 2026": 0.3,
+    "BLAST Bounty 2026 Season 2 Finals": 0.25,
+    "PGL Bucharest 2026": 0.2,
+    "XPL Guangzhou 2026": 0.15
+  }
+}

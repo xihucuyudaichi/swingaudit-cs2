@@ -1,0 +1,6 @@
+{
+  "api_key": "",
+  "base_url": "https://apihub.agnes-ai.com/v1",
+  "timeout_seconds": 60,
+  "max_tokens": 2048
+}

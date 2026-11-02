@@ -1,0 +1,8 @@
+{
+  "verified_at": "2026-11-01",
+  "events": [
+    {"id":"iem-beijing-2026","name":"IEM Beijing 2026","start_date":"2026-11-02","end_date":"2026-11-08","tier":"大型赛事","source_url":"https://pro.eslgaming.com/tour/cs/beijing/"},
+    {"id":"blast-rivals-hong-kong-2026","name":"BLAST Rivals Hong Kong 2026","start_date":"2026-11-11","end_date":"2026-11-15","tier":"大型赛事","source_url":"https://blast.tv/cs/news/blast-rivals-hk-26-teams"},
+    {"id":"pgl-major-singapore-2026","name":"PGL Major Singapore 2026","start_date":"2026-11-24","end_date":"2026-12-13","tier":"Major","source_url":"https://www.pglesports.com/cs2/pgl-major-singapore-2026/","schedule_note":"按 PGL 当前赛事详情页采用 11 月 24 日；早期公告为 25 日，票务列表另有 22 日，开赛前请复核。"}
+  ]
+}
